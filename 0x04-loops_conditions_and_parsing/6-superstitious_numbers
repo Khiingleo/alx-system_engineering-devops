@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# displays numbers from 1 to 20
+# at number 4 it displays "bad luck from China"
+# at number 9 it displays "bad luck from Japan"
+# at number 17 it displays "bad luck from Italy"
+# it makes use of the `case` statement
+
+i=1
+while [ $i -le 20 ]
+do
+	echo "$i"
+	case $i in
+	     "4") echo "bad luck from China" ;;
+             "9") echo "bad luck from Japan" ;;
+             "17") echo "bad luck from Italy" ;;
+        esac
+	(( i++ ))
+done	
