@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# configures an ubuntu server with below requirements
+# local host resolves to 127.0.0.2
+# facebook.com resolves to 8.8.8.8
+# checker is run on docker so we use:
+# "cp /etc/hosts ~/hosts.new"
+
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2		localhost" > ~/hosts.new
+echo "8.8.8.8		facebook.com" >> ~/hosts.new
+cp -f ~/hosts.new /etc/hosts
