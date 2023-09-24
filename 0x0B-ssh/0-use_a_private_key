@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Bash script that uses ssh to connect to my server using the private key
 
 
