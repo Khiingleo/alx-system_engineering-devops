@@ -6,11 +6,13 @@ include stdlib
 file_line { 'Turn off passwd auth':
   ensure => present,
   path   => '/etc/ssh/ssh_config',
-  line   => '	PasswordAuthentication no',
+  line   => 'PasswordAuthentication no',
+  match  => '^PasswordAuthentication',
 }
 
 file_line { 'Declare identify file':
   ensure => present,
   path   => '/etc/ssh/ssh_config',
-  line   => '	IdentifyFile ~/.ssh/school',
+  line   => 'IdentifyFile ~/.ssh/school',
+  match  => '^IdentifyFile',
 }
