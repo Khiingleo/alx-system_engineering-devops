@@ -1,7 +1,7 @@
 # Web Server
 
 ## tasks
-* Transfer a file to your server
+* Transfer a file to your server - script transfers file from client to server
 * Install nginx web server
 * Setup a domain name
 * Redirection
