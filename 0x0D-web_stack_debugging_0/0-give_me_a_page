@@ -1,5 +1,2 @@
 #!/usr/bin/env bash
-# use apache server to fix curl 
-
-
 sudo service apache2 start
