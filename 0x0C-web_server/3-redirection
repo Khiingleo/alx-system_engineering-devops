@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# configure Nginx server so that /redirect_me is redirecting tp another page
+# configure Nginx server so /redirect_me is redirecting tp another page
 
 sudo apt-get update
 sudo apt-get -y install nginx
