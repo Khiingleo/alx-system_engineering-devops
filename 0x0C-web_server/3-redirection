@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # configure Nginx server so /redirect_me is redirecting tp another page
 
-sudo apt-get update
+sudo apt-get -y update
 sudo apt-get -y install nginx
 
 echo 'Hello World!' | sudo tee /var/www/html/index.html
 
-sudo sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4/ permanent;' /etc/nginx/sites-available/default
+sudo sed -i '/listen 80 default_server/a rewrite ^/redirect_me https://www.facebook.com/ permanent;' /etc/nginx/sites-available/default
 
 sudo service nginx restart
