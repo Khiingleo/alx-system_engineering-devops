@@ -7,12 +7,6 @@ exec {'update':
   provider => shell,
 }
 
-exec {'install nginx':
-  command  => 'sudo apt-get -y install nginx',
-  provider => shell,
-  require  => Exec['update'],
-}
-
 package {'nginx':
   ensure  => 'installed',
 }
