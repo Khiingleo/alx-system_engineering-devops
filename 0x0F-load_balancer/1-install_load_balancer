@@ -1,44 +1,21 @@
 #!/usr/bin/env bash
-# install and configure HAproxy in the lb-01 server
+# Install and configure HAproxy on the lb-01 server.
 
 sudo apt-get -y update
-
-# install haproxy
 sudo apt-get -y install haproxy
 
-# create a temporary HAproxy configuration file
-sudo tee /etc/haproxy/haproxy.cfg.tmp > /dev/null <<EOF
-global
-    log /dev/log    local0
-    log /dev/log    local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
+frontend="frontend http-in"
+frontend+="\n\tbind *:80"
+frontend+="\n\tdefault_backend servers"
 
-defaults
-    log global
-    mode http
-    option httplog
-    option dontlognull
-    timeout connect 5000
-    timeout client 50000
-    timeout server 50000
+backend="backend servers"
+backend+="\n\tbalance roundrobin"
+backend+="\n\tserver 343765-web-01 100.25.153.47:80 check"
+backend+="\n\tserver 343765-web-02 52.87.22.215:80 check"
 
-frontend http-in
-    bind *:80
-    default_backend servers
+haproxy_config="/etc/haproxy/haproxy.cfg"
 
-backend servers
-    balance roundrobin
-    server 343765-web-01 100.25.153.47:80 check
-    server 343765-web-02 52.87.22.215:80 check
-EOF
+echo -e "$frontend" | sudo tee -a "$haproxy_config" > /dev/null
+echo -e "$backend" | sudo tee -a "$haproxy_config" > /dev/null
 
-# replace original config with temporary config
-sudo mv /etc/haproxy/haproxy.cfg.tmp /etc/haproxy/haproxy.cfg
-
-# restart haproxy service
 sudo service haproxy restart
