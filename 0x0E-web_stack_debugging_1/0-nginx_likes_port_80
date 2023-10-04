@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# fix nginx installation to listen on port 80
+
+# steps taken: install nginx, remove default config file
+# create symbolic link to config file 'sites-available'. restart nginx
+
+sudo rm "/etc/nginx/sites-enabled/default"
+sudo ln -s "/etc/nginx/sites-available/default" /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
