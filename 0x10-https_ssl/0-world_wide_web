@@ -1,41 +1,38 @@
 #!/usr/bin/env bash
 # script that displays DNS info for a domain and subdomain
 
-# function to display DNS information
-print_dns_info() {
+get_dns_info() {
 	local subdomain="$1"
-	local domain="$2"
-	local dns_output
-	local record_type
-	local destination
-	
-	dns_output=$(dig "$subdomain.$domain" +short)
+	local domain="$1"
+	local record_type="$3"
+	local destination="$4"
 
-	if [ -n "$dns_output" ]; then
-		record_type=$(dig "$subdomain.$domain" | awk '/IN/ {print $4}')
-		destination=$(dig "$subdomain.$domain" | awk '/IN/ {print $5}')
-		printf "The subdomain %s is a %s record and points to %s\n" "$subdomain" "$record_type"  "$destination"
-	fi
+	echo "The subdomain $subdomain is a $record_type record and points to $destination"
 }
 
+main() {
+	local domain="$1"
+	local subdomain="$2"
 
-# check for correct num of arguments
+	subdomains=("www" "lb-01" "web-01" "web-02")
+
+	if [ -n "$subdomain" ]; then
+		subdomains=("$subdomain")
+	fi
+
+	for subdomain in "${subdomains[@]}"; do
+		result=$(dig "$subdomain.$domain" +short)
+
+		if [ -n "$result" ]; then
+			record_type=$(dig "$subdomain.$domain" | grep -A1 'ANSWER SECTION:' | awk '/IN/ {print $4}')
+			get_dns_info "$subdomain" "$domain" "$record_type" "$result"
+		fi
+	done
+}
+
 if [ "$#" -lt 1 ]; then
 	echo "Usage: $0 <domain> [subdomain]"
 	exit 1
 fi
 
-domain="$1"
-
-if [ "$#" -eq 1 ]; then
-	# default subdomains to query
-	subdomains=("www" "lb-01" "web-01" "web-02")
-
-	# query dns info for each subdomain
-	for subdomain in "${subdomains[@]}"; do
-		print_dns_info "$subdomain" "$domain"
-	done
-else
-	subdomain="$2"
-	print_dns_info "$subdomain" "$domain"
-fi
+main "$@"
