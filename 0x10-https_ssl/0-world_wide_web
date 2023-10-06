@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# script that displays DNS info for a domain and subdomain
+
+# function to display DNS information
+print_dns_info() {
+	local subdomain="$1"
+	local domain="$2"
+	local dns_output
+	local record_type
+	local destination
+	
+	dns_output=$(dig "$subdomain.$domain" +short)
+
+	if [ -n "$dns_output" ]; then
+		record_type=$(dig "$subdomain.$domain" | awk '/IN/ {print $4}')
+		destination=$(dig "$subdomain.$domain" | awk '/IN/ {print $5}')
+		printf "The subdomain %s is a %s record and points to %s\n" "$subdomain" "$record_type"  "$destination"
+	fi
+}
+
+
+# check for correct num of arguments
+if [ "$#" -lt 1 ]; then
+	echo "Usage: $0 <domain> [subdomain]"
+	exit 1
+fi
+
+domain="$1"
+
+if [ "$#" -eq 1 ]; then
+	# default subdomains to query
+	subdomains=("www" "lb-01" "web-01" "web-02")
+
+	# query dns info for each subdomain
+	for subdomain in "${subdomains[@]}"; do
+		print_dns_info "$subdomain" "$domain"
+	done
+else
+	subdomain="$2"
+	print_dns_info "$subdomain" "$domain"
+fi
