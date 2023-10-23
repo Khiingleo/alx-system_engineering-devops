@@ -4,9 +4,9 @@ using task #0, extend the python script to export data in
 CSV format
 """
 
-from sys import argv
-import requests
 import csv
+import requests
+from sys import argv
 
 
 def export_in_csv():
