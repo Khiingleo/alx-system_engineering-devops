@@ -19,7 +19,7 @@ def export_all_as_json():
     to_do = requests.get(base_url + "/todos")
     for task in to_do.json():
         TASK_STATUS_TITLE.append((task.get("userId"), task.get("completed"),
-                                   task.get("title")))
+                                  task.get("title")))
 
     data_dict = dict()
     for per in USERS:
