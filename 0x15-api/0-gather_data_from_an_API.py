@@ -7,7 +7,7 @@ from sys import argv
 def show_todo():
     """displays todo list progress"""
     base_url = "https://jsonplaceholder.typicode.com"
-    output = "Employee {} is done with tasks({}/{})"
+    output = "Employee {} is done with tasks({}/{}):"
     user = requests.get(base_url + "/users")
     for per in user.json():
         if per.get("id") == int(argv[1]):
