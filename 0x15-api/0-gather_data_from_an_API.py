@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-returns info about usr TODO list progress
-"""
+"""returns info about usr TODO list progress"""
 import requests
 from sys import argv
 
