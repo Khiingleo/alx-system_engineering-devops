@@ -3,8 +3,8 @@
 python script that uses REST APi for given employee ID,
 and returns info about his/her TODO list progress
 """
-from sys import argv
 import requests
+from sys import argv
 
 
 def show_todo():
