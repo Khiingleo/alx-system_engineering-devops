@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-python script that uses REST APi for given employee ID,
-and returns info about his/her TODO list progress
+"""uses REST APi for employee ID,returns info about usr TODO list progress
 """
 import requests
 from sys import argv
