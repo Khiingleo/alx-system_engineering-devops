@@ -11,7 +11,7 @@ def number_of_subscribers(subreddit):
         0 if an invalid subreddit is given
     """
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    user = 'Google Chrom Version 119.0.6045.105'
+    user = 'Google Chrome Version 119.0.6045.105'
     headers = {'User-Agent': user}
 
     response = requests.get(url, headers=headers)
